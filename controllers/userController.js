@@ -18,6 +18,10 @@ exports.getAllUsers = async (req, res) => {
 // Get user berdasarkan ID
 exports.getUserById = async (req, res) => {
   try {
+    if (req.user && req.user.role === 'admin') {
+      return res.status(403).json({ message: 'Admin tidak diizinkan mengakses informasi pengguna ini' });
+    }
+
     const { id } = req.params;
     const result = await db.query(
       'SELECT id, username, role, created_at, updated_at FROM users WHERE id = $1',

@@ -105,7 +105,11 @@ exports.updateUser = async (req, res) => {
 
     const currentUser = userCheck.rows[0];
 
-    // Admin hanya dapat mengubah username dan password mereka sendiri
+    // Cek apakah user yang login adalah admin dan mencoba mengupdate dirinya sendiri
+    if (req.user.role === 'admin' && req.user.id.toString() === id.toString()) {
+      return res.status(403).json({ message: 'Admin tidak diperbolehkan mengupdate akun sendiri' });
+    }
+
     // Superadmin dapat mengubah semua termasuk role
     let updateFields = [];
     let values = [];

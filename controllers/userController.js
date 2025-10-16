@@ -95,7 +95,7 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, password, role, old_username, old_password } = req.body;
+    const { username, password, role } = req.body;
 
     // Cek apakah user ada
     const userCheck = await db.query(
@@ -114,31 +114,17 @@ exports.updateUser = async (req, res) => {
       return res.status(403).json({ message: 'Admin tidak diperbolehkan mengupdate akun sendiri' });
     }
 
-    if (!old_username || !old_password) {
-      return res.status(400).json({ message: 'Username lama dan password lama wajib diisi' });
-    }
-
-    if (old_username !== currentUser.username) {
-      return res.status(400).json({ message: 'Username lama tidak sesuai' });
-    }
-
-    const isPasswordValid = await bcrypt.compare(old_password, currentUser.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: 'Password lama tidak sesuai' });
-    }
-
     // Validasi username baru tidak boleh sama dengan password lama
-    if (username && old_username) {
-      if (username === old_username) {
+    if (username && currentUser.username) {
+      if (username === currentUser.username) {
         return res.status(400).json({ message: 'Username baru tidak boleh sama dengan username lama' });
       }
     }
 
     // Validasi password baru tidak boleh sama dengan password lama
-    if (password && old_password) {
-      if (password === old_password) {
-        return res.status(400).json({ message: 'Password baru tidak boleh sama dengan password lama' });
-      }
+    const isPasswordInvalid = await bcrypt.compare(password, currentUser.password);
+    if (isPasswordInvalid) {
+      return res.status(400).json({ message: 'Password baru tidak boleh sama dengan password lama' });
     }
 
     let updateFields = [];

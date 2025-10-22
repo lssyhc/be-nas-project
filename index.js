@@ -5,6 +5,7 @@ require('dotenv').config();
 // Import routes
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const testimonialRoutes = require('./routes/testimonialRoutes');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/testimonials', testimonialRoutes);
 
 // Route sederhana untuk cek server
 app.get('/', (req, res) => {

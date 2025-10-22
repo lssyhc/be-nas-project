@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "migrate": "node scripts/createTables.js",
-    "seed": "node scripts/seed.js"
+    "migrate-users": "node scripts/createUsersTable.js"
   },
   "keywords": [],
   "author": "",

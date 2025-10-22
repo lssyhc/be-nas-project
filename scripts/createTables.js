@@ -32,6 +32,32 @@ const createTables = async () => {
       console.log('Tabel testimonials sudah ada.');
     }
 
+    // Cek apakah tabel company_info sudah ada
+    const checkCompanyInfo = await db.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables
+        WHERE table_schema = 'public'
+        AND table_name = 'company_info'
+      );
+    `);
+
+    if (!checkCompanyInfo.rows[0].exists) {
+      console.log('Membuat tabel company_info...');
+      await db.query(`
+        CREATE TABLE company_info (
+          id SERIAL PRIMARY KEY,
+          address TEXT NOT NULL,
+          phone_number VARCHAR(25) NOT NULL,
+          email VARCHAR(255) NOT NULL,
+          created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP
+        );
+      `);
+      console.log('Tabel company_info berhasil dibuat!');
+    } else {
+      console.log('Tabel company_info sudah ada.');
+    }
+
     console.log('Migrasi berhasil!');
   } catch (error) {
     console.error('Error dalam migrasi:', error);

@@ -58,6 +58,33 @@ const createTables = async () => {
       console.log('Tabel company_info sudah ada.');
     }
 
+    // Cek apakah tabel social_media sudah ada
+    const checkSocialMedia = await db.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables
+        WHERE table_schema = 'public'
+        AND table_name = 'social_media'
+      );
+    `);
+
+    if (!checkSocialMedia.rows[0].exists) {
+      console.log('Membuat tabel social_media...');
+      await db.query(`
+        CREATE TABLE social_media (
+          id SERIAL PRIMARY KEY,
+          platform VARCHAR(50) NOT NULL,
+          url VARCHAR(255) NOT NULL,
+          icon VARCHAR(100),
+          sort_order INTEGER DEFAULT 0,
+          created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP
+        );
+      `);
+      console.log('Tabel social_media berhasil dibuat!');
+    } else {
+      console.log('Tabel social_media sudah ada.');
+    }
+
     console.log('Migrasi berhasil!');
   } catch (error) {
     console.error('Error dalam migrasi:', error);

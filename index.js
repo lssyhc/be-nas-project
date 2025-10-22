@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const testimonialRoutes = require('./routes/testimonialRoutes');
 const companyInfoRoutes = require('./routes/companyInfoRoutes');
+const socialMediaRoutes = require('./routes/socialMediaRoutes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/company-info', companyInfoRoutes);
+app.use('/api/social-media', socialMediaRoutes);
 
 // Route sederhana untuk cek server
 app.get('/', (req, res) => {

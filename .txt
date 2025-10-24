@@ -1,0 +1,14 @@
+1. Setup eslint karo pretier
+2. Setup env dan env prod
+3. Pisahkan runnner comand untuk dev dan prod di package.json
+4. Bikin script untuk otomatris linter dipackage.json ketika commit
+5. Hapus field background_color di testimoni
+6. Buat kondisi disemua api ketika input image max itu 2mb, dan tipe itu wajib webp (KHUSUS SOSMED BOLEH PNG, SVG DAN MAX SIZE FILE ADALAH 1MB. TESTI MAX SIZE FILE 1MB)
+7. Update api untuk get all testimonial, {{local}}/api/testimonialsfalse untuk get semua, dan query param ?is_active=true/false hanya untuk filtering
+8. Ganti filed di tabel testi dari role ke job, dan ganti nama image jadi photo_profile
+9. Update data di testi itu hanya name, job, meesage, photo_profile_url, rating, is_active
+10. Implemen base response disemua api
+11. Hapus api active toogle di testimonial
+12. di api company info, tambahin deskripsi
+13. hapus api reroder sosmed di api sosmed
+14. ganti field icon jadi image_url untuk simpan gambar/icon di api sosmed.  
